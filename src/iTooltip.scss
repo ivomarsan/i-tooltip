@@ -1,0 +1,119 @@
+$swift-ease-out: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+$swift-ease-in: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+
+$font-roboto: Roboto, 'Noto Sans', Noto, sans-serif;
+
+$tooltip-height: 2rem;
+
+.md-tooltip {
+  height: $tooltip-height;
+  padding: 0 0.5rem;
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  background-color: rgba(#616161, 0.87);
+  border-radius: 2px;
+  opacity: 0;
+  transform-origin: center top;
+  transition: $swift-ease-out;
+  transition-duration: 0.3s;
+  transition-delay: 0s;
+  color: #fff;
+  font-family: $font-roboto;
+  font-size: 10px;
+  line-height: $tooltip-height;
+  text-transform: none;
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+
+  &:after {
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(#fff, 0);
+    border-width: 5px;
+  }
+
+  &.md-active {
+    opacity: 1;
+    transition: $swift-ease-in;
+    transition-duration: 0.3s;
+  }
+
+  &:not(.md-active) {
+    transition-delay: 0s !important;
+  }
+
+  &.md-transition-off {
+    transition: none !important;
+  }
+
+  &.md-tooltip-top {
+    margin-top: -1rem;
+    transform: translate(-50%, 0.1rem);
+
+    &:after {
+      top: 100%;
+      left: 50%;
+      border-top-color: rgba(#616161, 0.87);
+      margin-left: -5px;
+    }
+
+    &.md-active {
+      transform: translate(-50%, 0);
+    }
+  }
+
+  &.md-tooltip-right {
+    margin-left: 1rem;
+    transform: translate(-0.1rem, 50%);
+    margin-top: -0.5rem;
+
+    &:after {
+      right: 100%;
+      top: 50%;
+      border-right-color: rgba(#616161, 0.87);
+      margin-top: -5px;
+    }
+
+    &.md-active {
+      transform: translate(0, 50%);
+    }
+  }
+
+  &.md-tooltip-bottom {
+    margin-top: 1rem;
+    transform: translate(-50%, -0.1rem);
+
+    &:after {
+      bottom: 100%;
+      left: 50%;
+      border-bottom-color: rgba(#616161, 0.87);
+      margin-left: -5px;
+    }
+
+    &.md-active {
+      transform: translate(-50%, 0);
+    }
+  }
+
+  &.md-tooltip-left {
+    margin-left: -1rem;
+    transform: translate(0.1rem, 50%);
+    margin-top: -0.5rem;
+
+    &:after {
+      left: 100%;
+      top: 50%;
+      border-left-color: rgba(#616161, 0.87);
+      margin-top: -5px;
+    }
+
+    &.md-active {
+      transform: translate(0, 50%);
+    }
+  }
+}
