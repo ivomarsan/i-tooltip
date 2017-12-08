@@ -4,6 +4,7 @@ $swift-ease-in: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
 $font-roboto: Roboto, 'Noto Sans', Noto, sans-serif;
 
 $tooltip-height: 2rem;
+$background: rgba(#616161, 0.87);
 
 .i-tooltip {
   height: $tooltip-height;
@@ -11,7 +12,7 @@ $tooltip-height: 2rem;
   position: fixed;
   z-index: 200;
   pointer-events: none;
-  background-color: rgba(#616161, 0.87);
+  background-color: $background;
   border-radius: 2px;
   opacity: 0;
   transform-origin: center top;
@@ -20,7 +21,7 @@ $tooltip-height: 2rem;
   transition-delay: 0s;
   color: #fff;
   font-family: $font-roboto;
-  font-size: 10px;
+  font-size: 1rem;
   line-height: $tooltip-height;
   text-transform: none;
   white-space: nowrap;
@@ -58,7 +59,7 @@ $tooltip-height: 2rem;
     &:after {
       top: 100%;
       left: 50%;
-      border-top-color: rgba(#616161, 0.87);
+      border-top-color: $background;
       margin-left: -5px;
     }
 
@@ -75,7 +76,7 @@ $tooltip-height: 2rem;
     &:after {
       right: 100%;
       top: 50%;
-      border-right-color: rgba(#616161, 0.87);
+      border-right-color: $background;
       margin-top: -5px;
     }
 
@@ -91,7 +92,7 @@ $tooltip-height: 2rem;
     &:after {
       bottom: 100%;
       left: 50%;
-      border-bottom-color: rgba(#616161, 0.87);
+      border-bottom-color: $background;
       margin-left: -5px;
     }
 
@@ -108,7 +109,7 @@ $tooltip-height: 2rem;
     &:after {
       left: 100%;
       top: 50%;
-      border-left-color: rgba(#616161, 0.87);
+      border-left-color: $background;
       margin-top: -5px;
     }
 

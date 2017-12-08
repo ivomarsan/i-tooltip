@@ -9,6 +9,7 @@
 
 <script>
 import transitionEndEventName from './transitionEndEventName';
+
 export default {
   name: 'i-tooltip',
   props: {

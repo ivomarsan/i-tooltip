@@ -1,4 +1,4 @@
-function transitionEndEventName () {
+const transitionEndEventName = () => {
   const el = document.createElement('span')
   const transitions = {
     transition: 'transitionend',
