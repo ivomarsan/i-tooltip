@@ -1,45 +1,38 @@
 <template>
-  <span class="md-tooltip" :class="classes" :style="style">
+  <span class="i-tooltip" :class="classes" :style="style">
     <slot></slot>
   </span>
 </template>
 
-<!--
-<style lang="scss" src="../../i-colors/src/i-colors.scss" scoped></style>
--->
 <style lang="css" src="../node_modules/i-colors/dist/i-colors.css" scoped></style>
 <style lang="scss" src="./iTooltip.scss" scoped></style>
 
 <script>
 import transitionEndEventName from './transitionEndEventName';
 export default {
-  name: 'md-tooltip',
+  name: 'i-tooltip',
   props: {
-    mdDirection: {
+    isTooltipPosition: {
       type: String,
-      default: 'bottom',
-    },
-    mdDelay: {
-      type: String,
-      default: '0',
+      default: 'top',
     },
   },
   data: () => ({
     active: false,
     parentClass: null,
     transitionOff: false,
-    topPosition: false,
-    leftPosition: false,
+    top: false,
+    left: false,
   }),
   computed: {
     classes() {
       const cssClasses = {
-        'md-active': this.active,
-        'md-transition-off': this.transitionOff,
-        'md-tooltip-top': this.mdDirection === 'top',
-        'md-tooltip-right': this.mdDirection === 'right',
-        'md-tooltip-bottom': this.mdDirection === 'bottom',
-        'md-tooltip-left': this.mdDirection === 'left',
+        'is-active': this.active,
+        'is-transition-off': this.transitionOff,
+        'is-tooltip-top': this.isTooltipPosition === 'top',
+        'is-tooltip-right': this.isTooltipPosition === 'right',
+        'is-tooltip-bottom': this.isTooltipPosition === 'bottom',
+        'is-tooltip-left': this.isTooltipPosition === 'left',
       };
       if (this.parentClass) {
         cssClasses[this.parentClass] = true;
@@ -48,14 +41,13 @@ export default {
     },
     style() {
       return {
-        'transition-delay': this.mdDelay + 'ms',
-        top: this.topPosition + 'px',
-        left: this.leftPosition + 'px',
+        top: this.top + 'px',
+        left: this.left + 'px',
       };
     },
   },
   watch: {
-    mdDirection() {
+    isTooltipPosition() {
       this.calculateTooltipPosition();
     },
   },
@@ -71,36 +63,32 @@ export default {
     },
     calculateTooltipPosition() {
       let position = this.parentElement.getBoundingClientRect();
-      let cssPosition = {};
-      switch (this.mdDirection) {
+      let pos = {};
+      switch (this.isTooltipPosition) {
         case 'top':
-          cssPosition.top = position.top - this.$el.offsetHeight;
-          cssPosition.left = position.left + position.width / 2;
+          this.top = position.top - this.$el.offsetHeight;
+          this.left = position.left + position.width / 2;
           break;
         case 'right':
-          cssPosition.top = position.top;
-          cssPosition.left = position.left + position.width;
+          this.top = position.top;
+          this.left = position.left + position.width;
           break;
         case 'bottom':
-          cssPosition.top = position.bottom;
-          cssPosition.left = position.left + position.width / 2;
+          this.top = position.bottom;
+          this.left = position.left + position.width / 2;
           break;
         case 'left':
-          cssPosition.top = position.top;
-          cssPosition.left = position.left - this.$el.offsetWidth;
+          this.top = position.top;
+          this.left = position.left - this.$el.offsetWidth;
           break;
         default:
-          console.warn(
-            `Invalid ${this.mdDirection} option to md-direction option`,
-          );
+          console.warn(`Invalid ${this.isTooltipPosition} position`);
       }
-      this.topPosition = cssPosition.top;
-      this.leftPosition = cssPosition.left;
     },
     generateTooltipClasses() {
       let classes = [];
       [...this.parentElement.classList].forEach(cssClass => {
-        if (cssClass.indexOf('md-') >= 0 && cssClass !== 'md-active') {
+        if (cssClass.indexOf('is-') >= 0 && cssClass !== 'is-active') {
           classes.push(cssClass + '-tooltip');
         }
       });
