@@ -4,7 +4,6 @@
   </span>
 </template>
 
-<style lang="css" src="../node_modules/i-colors/dist/i-colors.css" scoped></style>
 <style lang="scss" src="./iTooltip.scss" scoped></style>
 
 <script>
@@ -13,9 +12,13 @@ import transitionEndEventName from './transitionEndEventName';
 export default {
   name: 'i-tooltip',
   props: {
-    isTooltipPosition: {
+    isPosition: {
       type: String,
       default: 'top',
+    },
+    isZIndex: {
+      type: String,
+      default: '100',
     },
   },
   data: () => ({
@@ -30,10 +33,10 @@ export default {
       const cssClasses = {
         'is-active': this.active,
         'is-transition-off': this.transitionOff,
-        'is-tooltip-top': this.isTooltipPosition === 'top',
-        'is-tooltip-right': this.isTooltipPosition === 'right',
-        'is-tooltip-bottom': this.isTooltipPosition === 'bottom',
-        'is-tooltip-left': this.isTooltipPosition === 'left',
+        'is-tooltip-bottom': this.isTooltipPos === 'bottom',
+        'is-tooltip-right': this.isTooltipPos === 'right',
+        'is-tooltip-left': this.isTooltipPos === 'left',
+        'is-tooltip-top': this.isTooltipPos === 'top',
       };
       if (this.parentClass) {
         cssClasses[this.parentClass] = true;
@@ -44,11 +47,12 @@ export default {
       return {
         top: this.top + 'px',
         left: this.left + 'px',
+        'z-index': this.isZIndex,
       };
     },
   },
   watch: {
-    isTooltipPosition() {
+    isTooltipPos() {
       this.calculateTooltipPosition();
     },
   },
@@ -65,7 +69,7 @@ export default {
     calculateTooltipPosition() {
       let position = this.parentElement.getBoundingClientRect();
       let pos = {};
-      switch (this.isTooltipPosition) {
+      switch (this.isPosition) {
         case 'top':
           this.top = position.top - this.$el.offsetHeight;
           this.left = position.left + position.width / 2;
@@ -83,7 +87,14 @@ export default {
           this.left = position.left - this.$el.offsetWidth;
           break;
         default:
-          console.warn(`Invalid ${this.isTooltipPosition} position`);
+          console.warn(
+            `i-tooltip: Invalid ${this
+              .isPosition} position. By default was defined: is-position="top"`,
+          );
+          this.top = position.top - this.$el.offsetHeight;
+          this.left = position.left + position.width / 2;
+          this.isTooltipPos = 'top';
+          break;
       }
     },
     generateTooltipClasses() {
@@ -122,14 +133,18 @@ export default {
     },
   },
   mounted() {
+    this.isTooltipPos = this.isPosition || 'top';
+
     this.$nextTick(() => {
       this.tooltipElement = this.$el;
       this.parentElement = this.tooltipElement.parentNode;
-      this.$el.parentNode.removeChild(this.$el);
-      this.parentElement.addEventListener('mouseenter', this.open);
-      this.parentElement.addEventListener('focus', this.open);
-      this.parentElement.addEventListener('mouseleave', this.close);
-      this.parentElement.addEventListener('blur', this.close);
+      if (this.parentElement) {
+        this.$el.parentNode.removeChild(this.$el);
+        this.parentElement.addEventListener('mouseenter', this.open);
+        this.parentElement.addEventListener('focus', this.open);
+        this.parentElement.addEventListener('mouseleave', this.close);
+        this.parentElement.addEventListener('blur', this.close);
+      }
     });
   },
   beforeDestroy() {
