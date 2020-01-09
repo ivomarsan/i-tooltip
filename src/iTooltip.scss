@@ -7,7 +7,8 @@ $tooltip-height: 2rem;
 $background: rgba(#616161, 0.75);
 
 .i-tooltip {
-  height: $tooltip-height;
+  // height: $tooltip-height;
+  max-width: 500px;
   padding: 0 0.5rem;
   position: fixed;
   z-index: 200;
@@ -24,7 +25,7 @@ $background: rgba(#616161, 0.75);
   font-size: 1rem;
   line-height: $tooltip-height;
   text-transform: none;
-  white-space: nowrap;
+  white-space: normal;
   letter-spacing: 0.1em;
 
   &:after {
